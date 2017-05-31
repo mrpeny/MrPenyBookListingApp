@@ -7,10 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by MrPeny on 2017. 05. 30..
@@ -18,12 +20,27 @@ import java.net.URL;
 
 public class HttpHandler {
     private static final String TAG = HttpHandler.class.getSimpleName();
+    private static final String BASE_URL_STRING = "https://www.googleapis.com/books/v1/volumes";
 
-    public String fetchBookData(String requestUrl) {
+    public URL makeUrl(String query) {
+        URL builtUrl = null;
+        try {
+            query = URLEncoder.encode(query, "UTF-8");
+            URL baseUrl = new URL(BASE_URL_STRING);
+            builtUrl = new URL(baseUrl, "?q=" + query);
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
+        }
+        return builtUrl;
+    }
+
+    public String fetchBookData(String query) {
         String response = null;
 
         try {
-            URL url = new URL(requestUrl);
+            URL url = makeUrl(query);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             if (httpURLConnection.getResponseCode() == 200) {
@@ -34,8 +51,6 @@ public class HttpHandler {
                 Log.e(TAG, "Request error. Status code: " + httpURLConnection.getResponseCode() +
                         " " + httpURLConnection.getResponseMessage());
             }
-        } catch (MalformedURLException e) {
-            Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {
             Log.e(TAG, "ProtocolException: " + e.getMessage());
         } catch (IOException e) {

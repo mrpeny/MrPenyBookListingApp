@@ -16,29 +16,31 @@ public class BookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book);
     }
 
-    public void searchBook(View view) {
-        new BookAsyncTask().execute("https://www.googleapis.com/books/v1/volumes?q=android&maxResults=1");
+    public void startVolumeSearch(View view) {
+        String userQuery = ((EditText) findViewById(R.id.edit_text_view)).getText().toString();
+        new BookAsyncTask().execute(userQuery);
     }
 
     public void updateUi(String response) {
         TextView resultTextView = (TextView) findViewById(R.id.result_textview);
         resultTextView.setText(response);
+        QueryUtils.extractBooks(response);
     }
-
 
     class BookAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... requestUrl) {
+        protected String doInBackground(String... queries) {
             HttpHandler httpHandler = new HttpHandler();
 
             // TODO: Handle more arguments exception
-            return httpHandler.fetchBookData(requestUrl[0]);
+            return httpHandler.fetchBookData(queries[0]);
         }
 
         @Override
         protected void onPostExecute(String jsonResponse) {
             updateUi(jsonResponse);
+
         }
     }
 }
