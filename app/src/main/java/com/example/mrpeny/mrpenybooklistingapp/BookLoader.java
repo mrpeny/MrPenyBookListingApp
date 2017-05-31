@@ -3,7 +3,6 @@ package com.example.mrpeny.mrpenybooklistingapp;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -25,6 +25,11 @@ public class HttpHandler {
     private HttpHandler() {
     }
 
+    /**
+     * Fetches the Books using Goole Books API basd on the given search query
+     *
+     * @param query search keywords
+     * @return the search results in JSON String*/
     public static String fetchBookData(String query) {
         String response = null;
 
@@ -51,6 +56,7 @@ public class HttpHandler {
         return response;
     }
 
+    // Creates URL object compiled with the search keywords
     private static URL makeUrl(String query) {
         URL builtUrl = null;
         try {
@@ -65,6 +71,7 @@ public class HttpHandler {
         return builtUrl;
     }
 
+    // Converts the given InputStream to one String
     private static String convertStreamToString(InputStream inputStream) {
         if (inputStream != null) {
             StringBuilder stringBuilder = new StringBuilder();

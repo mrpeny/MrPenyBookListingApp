@@ -48,7 +48,6 @@ public class QueryUtils {
         } catch (JSONException e) {
             Log.e(LOG_TAG, "JSON parsing error: " + e.getMessage());
         }
-
         return bookList;
     }
 }

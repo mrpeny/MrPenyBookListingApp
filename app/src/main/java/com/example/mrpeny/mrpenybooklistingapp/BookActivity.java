@@ -1,9 +1,7 @@
 package com.example.mrpeny.mrpenybooklistingapp;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -21,12 +19,6 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void startVolumeSearch(View view) {
         getLoaderManager().initLoader(0, null, this);
-    }
-
-    public void updateUi(String response) {
-        TextView resultTextView = (TextView) findViewById(R.id.result_textview);
-        resultTextView.setText(response);
-        QueryUtils.extractBooks(response);
     }
 
     @Override
