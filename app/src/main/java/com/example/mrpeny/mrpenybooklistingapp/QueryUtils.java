@@ -14,8 +14,17 @@ import java.util.List;
  */
 
 public class QueryUtils {
-    private static final String TAG = QueryUtils.class.getSimpleName();
+    private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
+    private QueryUtils() {
+    }
+
+    /**
+     * Parses a JSON String to a List of Books
+     *
+     * @param jsonString the JSON object in String
+     * @return a List of Book objects parsed from the jsonString
+     */
     public static List<Book> extractBooks(String jsonString) {
         List<Book> bookList = new ArrayList<>();
 
@@ -37,7 +46,7 @@ public class QueryUtils {
                 bookList.add(new Book(title, authorList));
             }
         } catch (JSONException e) {
-            Log.e(TAG, "JSON parsing error: " + e.getMessage());
+            Log.e(LOG_TAG, "JSON parsing error: " + e.getMessage());
         }
 
         return bookList;

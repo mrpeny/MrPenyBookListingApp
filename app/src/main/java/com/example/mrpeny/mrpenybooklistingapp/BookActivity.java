@@ -2,13 +2,16 @@ package com.example.mrpeny.mrpenybooklistingapp;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class BookActivity extends AppCompatActivity {
-    private String url;
+import java.util.List;
+
+public class BookActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +20,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
     public void startVolumeSearch(View view) {
-        String userQuery = ((EditText) findViewById(R.id.edit_text_view)).getText().toString();
-        new BookAsyncTask().execute(userQuery);
+        getLoaderManager().initLoader(0, null, this);
     }
 
     public void updateUi(String response) {
@@ -27,20 +29,26 @@ public class BookActivity extends AppCompatActivity {
         QueryUtils.extractBooks(response);
     }
 
-    class BookAsyncTask extends AsyncTask<String, Void, String> {
+    @Override
+    public android.content.Loader<List<Book>> onCreateLoader(int id, Bundle args) {
+        String userQuery = ((EditText) findViewById(R.id.edit_text_view)).getText().toString();
+        return new BookLoader(this, userQuery);
+    }
 
-        @Override
-        protected String doInBackground(String... queries) {
-            HttpHandler httpHandler = new HttpHandler();
+    @Override
+    public void onLoadFinished(android.content.Loader<List<Book>> loader, List<Book> data) {
+        TextView resultTextView = (TextView) findViewById(R.id.result_textview);
+        StringBuilder stringBuilder = new StringBuilder();
 
-            // TODO: Handle more arguments exception
-            return httpHandler.fetchBookData(queries[0]);
+        for (Book book : data) {
+            stringBuilder.append(book.getBookTitle()).append("\n");
         }
 
-        @Override
-        protected void onPostExecute(String jsonResponse) {
-            updateUi(jsonResponse);
+        resultTextView.setText(stringBuilder.toString());
+    }
 
-        }
+    @Override
+    public void onLoaderReset(android.content.Loader<List<Book>> loader) {
+
     }
 }

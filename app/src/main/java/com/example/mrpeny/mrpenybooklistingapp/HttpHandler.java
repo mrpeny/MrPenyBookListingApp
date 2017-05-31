@@ -19,24 +19,13 @@ import java.net.URLEncoder;
  */
 
 public class HttpHandler {
-    private static final String TAG = HttpHandler.class.getSimpleName();
+    private static final String LOG_TAG = HttpHandler.class.getSimpleName();
     private static final String BASE_URL_STRING = "https://www.googleapis.com/books/v1/volumes";
 
-    public URL makeUrl(String query) {
-        URL builtUrl = null;
-        try {
-            query = URLEncoder.encode(query, "UTF-8");
-            URL baseUrl = new URL(BASE_URL_STRING);
-            builtUrl = new URL(baseUrl, "?q=" + query);
-        } catch (MalformedURLException e) {
-            Log.e(TAG, "MalformedURLException: " + e.getMessage());
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
-        }
-        return builtUrl;
+    private HttpHandler() {
     }
 
-    public String fetchBookData(String query) {
+    public static String fetchBookData(String query) {
         String response = null;
 
         try {
@@ -48,21 +37,35 @@ public class HttpHandler {
                         new BufferedInputStream(httpURLConnection.getInputStream());
                 response = convertStreamToString(inputStream);
             } else {
-                Log.e(TAG, "Request error. Status code: " + httpURLConnection.getResponseCode() +
+                Log.e(LOG_TAG, "Request error. Status code: " + httpURLConnection.getResponseCode() +
                         " " + httpURLConnection.getResponseMessage());
             }
         } catch (ProtocolException e) {
-            Log.e(TAG, "ProtocolException: " + e.getMessage());
+            Log.e(LOG_TAG, "ProtocolException: " + e.getMessage());
         } catch (IOException e) {
-            Log.e(TAG, "IOException: " + e.getMessage());
+            Log.e(LOG_TAG, "IOException: " + e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+            Log.e(LOG_TAG, "Exception: " + e.getMessage());
         }
 
         return response;
     }
 
-    private String convertStreamToString(InputStream inputStream) {
+    private static URL makeUrl(String query) {
+        URL builtUrl = null;
+        try {
+            query = URLEncoder.encode(query, "UTF-8");
+            URL baseUrl = new URL(BASE_URL_STRING);
+            builtUrl = new URL(baseUrl, "?q=" + query);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "MalformedURLException: " + e.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            Log.e(LOG_TAG, "UnsupportedEncodingException: " + e.getMessage());
+        }
+        return builtUrl;
+    }
+
+    private static String convertStreamToString(InputStream inputStream) {
         if (inputStream != null) {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
@@ -74,12 +77,12 @@ public class HttpHandler {
                     stringBuilder.append(line);
                 }
             } catch (IOException e) {
-               Log.e(TAG, "BufferedReader error: " + e.getMessage());
+               Log.e(LOG_TAG, "BufferedReader error: " + e.getMessage());
             } finally {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "inputStream closing error: " + e.getMessage());
+                    Log.e(LOG_TAG, "inputStream closing error: " + e.getMessage());
                 }
             }
             return stringBuilder.toString();
