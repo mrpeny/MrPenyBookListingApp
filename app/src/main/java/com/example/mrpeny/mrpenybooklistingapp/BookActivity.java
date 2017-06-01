@@ -1,15 +1,17 @@
 package com.example.mrpeny.mrpenybooklistingapp;
 
-import android.app.LoaderManager;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.List;
+public class BookActivity extends AppCompatActivity {
+    private static final String LOG_TAG = BookActivity.class.getSimpleName();
 
-public class BookActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>{
+    private static final String KEYWORDS_KEY = "KEYWORDS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,30 +19,18 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_book);
     }
 
-    public void startVolumeSearch(View view) {
-        getLoaderManager().initLoader(0, null, this);
-    }
+    public void onSearchButtonClick(View view) {
+        //Toast.makeText(this, R.string.enter_keywords,Toast.LENGTH_SHORT).show();
+        String userKeywords = ((EditText) findViewById(R.id.edit_text_view)).getText().toString();
 
-    @Override
-    public android.content.Loader<List<Book>> onCreateLoader(int id, Bundle args) {
-        String userQuery = ((EditText) findViewById(R.id.edit_text_view)).getText().toString();
-        return new BookLoader(this, userQuery);
-    }
-
-    @Override
-    public void onLoadFinished(android.content.Loader<List<Book>> loader, List<Book> data) {
-        TextView resultTextView = (TextView) findViewById(R.id.result_textview);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Book book : data) {
-            stringBuilder.append(book.getBookTitle()).append("\n");
+        if (userKeywords.isEmpty()) {
+            Toast.makeText(this, R.string.enter_keywords,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Keywords entered",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, BookListActivity.class);
+            intent.putExtra(KEYWORDS_KEY, userKeywords);
+            startActivity(intent);
         }
-
-        resultTextView.setText(stringBuilder.toString());
-    }
-
-    @Override
-    public void onLoaderReset(android.content.Loader<List<Book>> loader) {
 
     }
 }

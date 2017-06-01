@@ -1,7 +1,10 @@
 package com.example.mrpeny.mrpenybooklistingapp;
 
+
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+
+import android.util.Log;
 
 import java.util.List;
 
@@ -24,10 +27,14 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     @Override
     public List<Book> loadInBackground() {
+        Log.i("BookLoader", "loadInBackground() called");
+        if (query == null) {
+            return null;
+        }
+
         List<Book> bookList;
 
         String jsonResponse = HttpHandler.fetchBookData(query);
-
         // TODO: Handle more arguments exception
         bookList = QueryUtils.extractBooks(jsonResponse);
 

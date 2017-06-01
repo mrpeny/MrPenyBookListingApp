@@ -7,16 +7,16 @@ import java.util.List;
  */
 
 public class Book {
-    private String bookTitle;
+    private String title;
     private List<String> authors;
 
-    public Book(String bookTitle, List<String> authors) {
-        this.bookTitle = bookTitle;
+    public Book(String title, List<String> authors) {
+        this.title = title;
         this.authors = authors;
     }
 
-    public String getBookTitle() {
-        return bookTitle;
+    public String getTitle() {
+        return title;
     }
 
     public List<String> getAuthors() {
