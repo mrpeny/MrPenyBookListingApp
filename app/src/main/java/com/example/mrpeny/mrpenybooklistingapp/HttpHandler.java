@@ -62,7 +62,7 @@ class HttpHandler {
         try {
             query = URLEncoder.encode(query, "UTF-8");
             URL baseUrl = new URL(BASE_URL_STRING);
-            builtUrl = new URL(baseUrl, "?q=" + query);
+            builtUrl = new URL(baseUrl, "?maxResults=40&q=" + query);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "MalformedURLException: " + e.getMessage());
         } catch (UnsupportedEncodingException e) {

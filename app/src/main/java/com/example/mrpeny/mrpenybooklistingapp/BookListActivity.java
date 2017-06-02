@@ -22,12 +22,10 @@ import java.util.List;
  */
 
 public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>{
-    private static final String LOG_TAG = BookListActivity.class.getSimpleName();
     private static final int BOOKLOADER_ID = 0;
     private static final String KEYWORDS_KEY = "KEYWORDS";
     String keywords;
     private List<Book> bookList = new ArrayList<>();
-    private List<Book> bookListStorage = new ArrayList<>();
     private RecyclerView bookRecyclerView;
     private BookAdapter bookAdapter;
     private TextView emptyStateTextView;
@@ -82,7 +80,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
             // If there is new data then update the list
             bookAdapter.setBookList(newBookList);
             bookAdapter.notifyDataSetChanged();
-            bookListStorage = new ArrayList<>(newBookList);
         } else {
             emptyStateTextView.setText(getString(R.string.no_books_error, keywords));
         }

@@ -46,7 +46,10 @@ class QueryUtils {
                         authorList.add(authors.getString(j));
                     }
                 }
-                bookList.add(new Book(title, authorList));
+
+                // Extracting infoLink
+                String infoLink = bookInfo.getString("infoLink");
+                bookList.add(new Book(title, authorList, infoLink));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "JSON parsing error: " + e.getMessage());

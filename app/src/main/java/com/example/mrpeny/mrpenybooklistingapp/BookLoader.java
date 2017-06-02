@@ -7,7 +7,7 @@ import android.content.Context;
 import java.util.List;
 
 /**
- * Responsible for background thread, networdk an parsing operations
+ * Responsible for background thread, network an parsing operations
  */
 
 class BookLoader extends AsyncTaskLoader<List<Book>> {
@@ -30,11 +30,8 @@ class BookLoader extends AsyncTaskLoader<List<Book>> {
             return null;
         }
 
-        List<Book> bookList;
-
         String jsonResponse = HttpHandler.fetchBookData(query);
-        // TODO: Handle more arguments exception
-        bookList = QueryUtils.extractBooks(jsonResponse);
+        List<Book> bookList = QueryUtils.extractBooks(jsonResponse);
 
         return bookList;
     }

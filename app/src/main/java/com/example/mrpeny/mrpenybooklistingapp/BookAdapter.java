@@ -1,5 +1,7 @@
 package com.example.mrpeny.mrpenybooklistingapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import java.util.List;
 class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private List<Book> bookList;
 
+
     BookAdapter(List<Book> bookList) {
         this.bookList = bookList;
     }
@@ -24,7 +27,22 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.book_list_item, parent, false);
 
-        return new BookAdapter.ViewHolder(itemView);
+        final BookAdapter.ViewHolder viewHolder = new BookAdapter.ViewHolder(itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //bookItemClickListener.onItemClick(v, viewHolder.getAdapterPosition());
+                String bookInfoLink = bookList.get(viewHolder.getAdapterPosition()).getInfoLink();
+                Uri bookInfoUri;
+                bookInfoUri = Uri.parse(bookInfoLink);
+                Intent intent = new Intent(Intent.ACTION_VIEW, bookInfoUri);
+                if (intent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                    v.getContext().startActivity(intent);
+                }
+
+            }
+        });
+        return viewHolder;
     }
 
     @Override
