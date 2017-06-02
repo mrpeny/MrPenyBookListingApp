@@ -1,9 +1,9 @@
 package com.example.mrpeny.mrpenybooklistingapp;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,7 +34,7 @@ public class BookActivity extends AppCompatActivity {
         });
     }
 
-    /* Triggered by Seardh Button click */
+    /* Triggered by Search Button click */
     public void onSearchButtonClick(View view) {
         performSearch();
     }
@@ -44,7 +44,9 @@ public class BookActivity extends AppCompatActivity {
         String userKeywords = editText.getText().toString();
 
         if (userKeywords.isEmpty()) {
-            Toast.makeText(this, R.string.enter_keywords,Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(this, R.string.enter_keywords, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         } else {
             Intent intent = new Intent(this, BookListActivity.class);
             intent.putExtra(KEYWORDS_KEY, userKeywords);
