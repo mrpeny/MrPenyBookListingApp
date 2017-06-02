@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="general_padding">16dp</dimen>
+
+    <!-- activity_book dimensions -->
+    <dimen name="edit_text_margin_left_right">30dp</dimen>
+    <dimen name="element_margins">16dp</dimen>
+    <dimen name="welcome_text_size">20sp</dimen>
+
+    <!-- book_list_item dimensions -->
+    <dimen name="element_padding">4dp</dimen>
+</resources>

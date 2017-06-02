@@ -1,6 +1,16 @@
-<resources>
-    <string name="app_name">MrPeny Book Listing App</string>
-    <string name="enter_keywords">Enter your search keywords!</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- General texts -->
+    <string name="app_name">Book Listing App</string>
+
+    <!-- Error messages -->
     <string name="internet_connection_error">No internet. Please check your connection!</string>
-    <string name="no_books_error">No books found for keywords: </string>
+    <string name="no_books_error">
+        No books found for keywords: <xliff:g example="ssfghgsf" id="keywords">%s</xliff:g>
+    </string>
+
+    <!-- activity_book texts -->
+    <string name="enter_keywords">Enter your search keywords!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="search_books_online">Search Books Online</string>
+    <string name="search">Search</string>
 </resources>

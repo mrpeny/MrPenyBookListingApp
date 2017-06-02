@@ -15,13 +15,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
- * Created by MrPeny on 2017. 05. 30..
+ * Handles HTTTP requests, URL building and String building from fetched data
  */
-
-public class HttpHandler {
+class HttpHandler {
     private static final String LOG_TAG = HttpHandler.class.getSimpleName();
     private static final String BASE_URL_STRING = "https://www.googleapis.com/books/v1/volumes";
 
+    // Setting constructor private because it will not be used
     private HttpHandler() {
     }
 
@@ -30,7 +30,7 @@ public class HttpHandler {
      *
      * @param query search keywords
      * @return the search results in JSON String*/
-    public static String fetchBookData(String query) {
+    static String fetchBookData(String query) {
         String response = null;
 
         try {

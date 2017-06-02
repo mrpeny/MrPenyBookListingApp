@@ -3,7 +3,7 @@ package com.example.mrpeny.mrpenybooklistingapp;
 import java.util.List;
 
 /**
- * Created by MrPeny on 2017. 05. 31..
+ * Contains a representation of Google Volume, Book
  */
 
 public class Book {
@@ -15,11 +15,11 @@ public class Book {
         this.authors = authors;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public List<String> getAuthors() {
+    List<String> getAuthors() {
         return authors;
     }
 }

@@ -9,30 +9,14 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by MrPeny on 2017. 05. 31..
+ * Adapter used to create and hold recyclable List Item Views
  */
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
-    List<Book> bookList;
+class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
+    private List<Book> bookList;
 
-    public BookAdapter(List<Book> bookList) {
+    BookAdapter(List<Book> bookList) {
         this.bookList = bookList;
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView authorsTextView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            this.titleTextView = (TextView) itemView.findViewById(R.id.book_title);
-            this.authorsTextView = (TextView) itemView.findViewById(R.id.book_authors);
-        }
     }
 
     @Override
@@ -54,10 +38,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
         List<String> authorsList = book.getAuthors();
         StringBuilder authors = new StringBuilder();
+        // if there are no authors associated with the Book
         if (authorsList.isEmpty()) {
             authors.append("No author");
         } else {
+            // Get the first author from the list
             authors.append(authorsList.get(0));
+            // Appending the rest of authors to the first author from the list
             for (int i = 1; i < authorsList.size(); i++) {
                 authors.append(", ").append(authorsList.get(i));
             }
@@ -73,7 +60,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         return bookList.size();
     }
 
-    public void setBookList(List<Book> bookList) {
+    void setBookList(List<Book> bookList) {
         this.bookList = bookList;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView;
+        TextView authorsTextView;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            this.titleTextView = (TextView) itemView.findViewById(R.id.book_title);
+            this.authorsTextView = (TextView) itemView.findViewById(R.id.book_authors);
+        }
     }
 }

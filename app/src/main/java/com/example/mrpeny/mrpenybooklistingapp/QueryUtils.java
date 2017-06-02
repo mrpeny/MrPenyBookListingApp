@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by MrPeny on 2017. 05. 31..
+ * Responsible for parsing JSON object from string
  */
 
-public class QueryUtils {
+class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     private QueryUtils() {
@@ -25,7 +25,7 @@ public class QueryUtils {
      * @param jsonString the JSON object in String
      * @return a List of Book objects parsed from the jsonString
      */
-    public static List<Book> extractBooks(String jsonString) {
+    static List<Book> extractBooks(String jsonString) {
         List<Book> bookList = new ArrayList<>();
 
         try {
@@ -34,9 +34,12 @@ public class QueryUtils {
             for (int i = 0; i < bookItems.length(); i++) {
                 JSONObject book = bookItems.getJSONObject(i);
                 JSONObject bookInfo = book.getJSONObject("volumeInfo");
-                String title = bookInfo.getString("title");
-                List<String> authorList = new ArrayList<>();
 
+                // Extracting title from the book info
+                String title = bookInfo.getString("title");
+
+                List<String> authorList = new ArrayList<>();
+                // Extracting authors from the book info if any
                 if (bookInfo.has("authors")) {
                     JSONArray authors = bookInfo.getJSONArray("authors");
                     for (int j = 0; j < authors.length(); j++) {

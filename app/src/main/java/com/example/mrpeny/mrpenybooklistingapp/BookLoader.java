@@ -4,18 +4,16 @@ package com.example.mrpeny.mrpenybooklistingapp;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import android.util.Log;
-
 import java.util.List;
 
 /**
- * Created by MrPeny on 2017. 05. 31..
+ * Responsible for background thread, networdk an parsing operations
  */
 
-public class BookLoader extends AsyncTaskLoader<List<Book>> {
+class BookLoader extends AsyncTaskLoader<List<Book>> {
     private String query;
 
-    public BookLoader(Context context, String query) {
+    BookLoader(Context context, String query) {
         super(context);
         this.query = query;
     }
@@ -27,7 +25,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     @Override
     public List<Book> loadInBackground() {
-        Log.i("BookLoader", "loadInBackground() called");
+        // If there is now query to fetch then return null
         if (query == null) {
             return null;
         }
